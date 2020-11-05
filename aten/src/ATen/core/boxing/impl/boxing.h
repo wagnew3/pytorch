@@ -71,50 +71,20 @@ using can_unbox =
   >;
 
 //
-// BoxedKernelWrapper
+// boxArgs - utility for pushing unboxed args onto IValue stack
 //
-// For a given function type FT, BoxedKernelWrapper<FT> implements
-//
-// 1. a `boxArgs` method that boxes the function's arguments - i.e.,
-//    inserts each argument into an IValue that it pushes onto a
-//    torch::jit::Stack, which it returns
-//
-// 2. a `call` method that
-// - takes a boxed kernel and unboxed arguments as specified by FT,
-// - calls `boxArgs` to box the arguments
-// - calls the boxed kernel
-// - unboxes and returns the result
-//
-// The partial specializations below handle various cases: in
-// particular, not all types appearing in op signatures are supported,
-// and ops returning references have nonstandard wrapper implementations.
-//
-
-// 1. The base specialization of BoxedKernelWrapper should never be instantiated.
-// A "no call method defined on BoxedKernelWrapper" compile error means that
-// an op signature has failed to trigger any of the partial specializations
-// that follow this one.
-//
-template <class FuncType, class Enable = void>
-struct BoxedKernelWrapper {
-  // The reason we're not just doing straight up static_assert(false, ...) here:
-  // Basically, the way to make sure a static_assert only fires if a template
-  // is actually instantiated (rather than every time the file is parsed) is to use
-  // template parameters in the expression, e.g. FuncType here. However, since
-  // `sizeof(FuncType) != sizeof(FuncType)` is always false, this has the same
-  // effect.
-  static_assert(sizeof(FuncType) != sizeof(FuncType),
-    "Function signature contains one or more unsupported parameter and/or return types. "
-    "Look for a nearby error like "
-    "\"'call' is not a member of 'c10::impl::BoxedKernelWrapper<(your function type), void>'\" "
-    "- (your function type) is the unsupported signature.");
-};
+template <class... Args>
+static torch::jit::Stack boxArgs(Args... args) {
+  // TODO Reuse stack vector instead of allocating?
+  torch::jit::Stack stack;
+  stack.reserve(sizeof...(Args));
+  torch::jit::push(stack, std::forward<Args>(args)...);
+  return stack;
+}
 
 //
-// 2. Supported signatures, other than ref-passing.
-//
-
-// helper class whose specializations handle single and multiple return values, respectively
+// PopResult is a helper class whose specializations handle popping single and
+// multiple return values, respectively.
 //
 template <class Result>
 struct PopResult final {
@@ -151,6 +121,46 @@ private:
   }
 };
 
+//
+// BoxedKernelWrapper
+//
+// For a given function type FT, BoxedKernelWrapper<FT> implements
+// a `call` method that
+// - takes a boxed kernel and unboxed arguments as specified by FT,
+// - calls `boxArgs` to box the arguments
+// - calls the boxed kernel
+// - unboxes and returns the result
+//
+// The partial specializations below handle various cases: in
+// particular, not all types appearing in op signatures are supported,
+// and ops returning references have nonstandard wrapper implementations.
+//
+
+// 1. The base specialization of BoxedKernelWrapper should never be instantiated.
+// A "no call method defined on BoxedKernelWrapper" compile error means that
+// an op signature has failed to trigger any of the partial specializations
+// that follow this one.
+//
+template <class FuncType, class Enable = void>
+struct BoxedKernelWrapper {
+  // The reason we're not just doing straight up static_assert(false, ...) here:
+  // Basically, the way to make sure a static_assert only fires if a template
+  // is actually instantiated (rather than every time the file is parsed) is to use
+  // template parameters in the expression, e.g. FuncType here. However, since
+  // `sizeof(FuncType) != sizeof(FuncType)` is always false, this has the same
+  // effect.
+  static_assert(sizeof(FuncType) != sizeof(FuncType),
+    "Function signature contains one or more unsupported parameter and/or return types. "
+    "Look for a nearby error like "
+    "\"'call' is not a member of 'c10::impl::BoxedKernelWrapper<(your function type), void>'\" "
+    "- (your function type) is the unsupported signature.");
+};
+
+//
+// 2. Supported signatures, other than those involving non-const Tensor refs -
+// i.e., "functional" ops.
+//
+
 template <class Result, class... Args>
 struct BoxedKernelWrapper<
   Result(Args...),
@@ -159,14 +169,6 @@ struct BoxedKernelWrapper<
     void
   >
 > {
-  static torch::jit::Stack boxArgs(Args... args) {
-    // TODO Reuse stack vector instead of allocating?
-    torch::jit::Stack stack;
-    stack.reserve(sizeof...(Args));
-    torch::jit::push(stack, std::forward<Args>(args)...);
-    return stack;
-  }
-
   static Result call(
     KernelFunction::InternalBoxedKernelFunction* boxed_kernel_func,
     OperatorKernel* functor,
@@ -194,12 +196,15 @@ struct BoxedKernelWrapper<
 };
 
 //
-// 3. signatures taking a single Tensor reference as their first argument,
-// and also returning one.
+// 3. in-place and legacy out-of-place ops take a single non-const Tensor
+// reference as their first argument, and return it.
 //
-// Note that the passed kernels are assumed to be for inplace/outplace ops,
-// and the generated BoxedKernelWrapper specializations will simply return
-// the initial argument.
+// Note: all signatures matching this pattern are are assumed to be for such ops.
+// Because of this, the generated BoxedKernelWrapper specializations simply
+// return the in-place argument.
+//
+// TODO update comment when legacy out-of-place signatures no longer need
+// to be supported, due to hacky_wrapper reordering
 //
 
 template <class... OtherArgs>
@@ -207,21 +212,11 @@ struct BoxedKernelWrapper<
   at::Tensor&(at::Tensor&, OtherArgs...),
   std::enable_if_t<can_box_all<OtherArgs...>::value, void>
 > {
-  static torch::jit::Stack boxArgs(at::Tensor& outArg, OtherArgs... otherArgs) {
-    // TODO Reuse stack vector instead of allocating?
-    torch::jit::Stack stack;
-    stack.reserve(1 + sizeof...(OtherArgs));
-    torch::jit::push_one(stack, outArg);
-    torch::jit::push(stack, std::forward<OtherArgs>(otherArgs)...);
-    return stack;
-  }
-
   static at::Tensor& call(
     KernelFunction::InternalBoxedKernelFunction* boxed_kernel_func,
     OperatorKernel* functor,
     const OperatorHandle& opHandle,
-    at::Tensor& outArg,
-    OtherArgs... otherArgs
+    at::Tensor& outArg, OtherArgs... otherArgs
   ) {
     torch::jit::Stack stack = boxArgs(outArg, otherArgs...);
     (*boxed_kernel_func)(functor, opHandle, &stack);
@@ -236,30 +231,76 @@ struct BoxedKernelWrapper<
 };
 
 //
-// 4. signatures returning a tuple of Tensor references, and taking the same
-// number of Tensor refs as their initial arguments.
+// 4. an out of place op takes one or more non-const Tensor ref arguments at the
+// end of the arg list, and also returns it/them. This specialization supports
+// those that take and return a single out argument.
 //
-// Note that the passed kernels are assumed to be for inplace/outplace ops,
-// and the generated BoxedKernelWrapper specializations will return a tuple
-// of those initial arguments.
+// Note: all signatures matching this pattern are are assumed to be for such ops.
+// This assumption permits the generated BoxedKernelWrapper specializations to simply
+// return out arguments.
 //
+template <class FirstArg, class... RestArgs>
+struct BoxedKernelWrapper<
+  at::Tensor&(FirstArg, RestArgs...),
+  std::enable_if_t<
+    can_box_all<FirstArg, RestArgs...>::value
+    // this skips over in-place (and legacy out-of-place) kernels with a non-const Tensor
+    // arg at the front, so those can unambiguously trigger the preceding specialization.
+    // TODO update comment when hacky_wrapper reorders legacy out-of-place signatures
+    && !is_mutable_tensor_ref<FirstArg>::value,
+    void
+  >
+> {
+  static at::Tensor& call(
+    KernelFunction::InternalBoxedKernelFunction* boxed_kernel_func,
+    OperatorKernel* functor,
+    const OperatorHandle& opHandle,
+    FirstArg firstArg, RestArgs... restArgs
+  ) {
+    torch::jit::Stack stack = boxArgs(firstArg, restArgs...);
+    (*boxed_kernel_func)(functor, opHandle, &stack);
+    TORCH_INTERNAL_ASSERT_DEBUG_ONLY(
+      stack.size() == 1,
+      "Boxed kernel was expected to return a single value on the stack, ",
+      "but instead returned ", stack.size(), " values."
+    );
 
+    return std::get<sizeof...(RestArgs) - 1>(std::tuple<RestArgs...>{restArgs...});
+  }
+};
+
+//
+// 5. an out of place op takes one or more non-const Tensor ref arguments at the
+// end of the arg list, and also returns it/them. This specialization supports
+// those that take and return multiple out arguments.
+//
+// Note: all signatures matching this pattern are are assumed to be for such ops.
+// This assumption permits the generated BoxedKernelWrapper specializations to simply
+// return the out arguments.
+//
 template <class Result, class... Args>
 struct BoxedKernelWrapper<
   Result(Args...),
   std::enable_if_t<
-    can_box_all<Args...>::value && is_tuple_of_mutable_tensor_refs<Result>::value,
+    can_box_all<Args...>::value && is_tuple_of_mutable_tensor_refs<Result>::value
+    // this abomination just skips over legacy kernels with out args at the front, so they can trigger
+    // the specialization that follows.
+    // note: this test is extra terrible because boolean value expressions in templates don't shortcut.
+    // so without the ternary, a result tuple that's wider than the arg list will cause a compile error
+    // even with a length check preceding it in the conjunction. template metaprogramming ftw
+    // TODO remove when hacky_wrapper reorders legacy kernel out args
+    && !std::is_same<
+        Result,
+        guts::typelist::to_tuple_t<
+          guts::typelist::take_t<
+            guts::typelist::typelist<Args...>,
+            sizeof...(Args) >= std::tuple_size<Result>::value ? std::tuple_size<Result>::value : sizeof...(Args)
+          >
+        >
+      >::value,
     void
   >
 > {
-  static torch::jit::Stack boxArgs(Args... args) {
-    // TODO Reuse stack vector instead of allocating?
-    torch::jit::Stack stack;
-    stack.reserve(sizeof...(Args));
-    torch::jit::push(stack, std::forward<Args>(args)...);
-    return stack;
-  }
-
   static Result call(
     KernelFunction::InternalBoxedKernelFunction* boxed_kernel_func,
     OperatorKernel* functor,
@@ -277,13 +318,58 @@ struct BoxedKernelWrapper<
       "but instead returned ", stack.size(), " values."
     );
 
-    auto result = guts::tuple_take<ArgTuple, RetCount>(ArgTuple{args...});
+    auto result = guts::tuple_take<ArgTuple, -RetCount>(ArgTuple{args...});
     static_assert(
         std::is_same<Result, decltype(result)>::value,
         "The parameter list of an op returning a tuple of Tensor references "
-            "must begin with an equal number of Tensor reference parameters."
+            "must end with an equal number of Tensor reference parameters."
     );
     return result;
+  }
+};
+
+//
+// 6. legacy trap for old-school multi-return out functions with mutable args
+// at start rather than end of arg list.
+// TODO remove when hacky_wrapper reorders legacy kernel out args
+//
+
+template <class Result, class... Args>
+struct BoxedKernelWrapper<
+  Result(Args...),
+  std::enable_if_t<
+    can_box_all<Args...>::value && is_tuple_of_mutable_tensor_refs<Result>::value
+    && std::is_same<
+        Result,
+        guts::typelist::to_tuple_t<
+          guts::typelist::take_t<
+            guts::typelist::typelist<Args...>,
+            sizeof...(Args) >= std::tuple_size<Result>::value ? std::tuple_size<Result>::value : sizeof...(Args)
+          >
+        >
+      >::value,
+    void
+  >
+> {
+  static Result call(
+    KernelFunction::InternalBoxedKernelFunction* boxed_kernel_func,
+    OperatorKernel* functor,
+    const OperatorHandle& opHandle,
+    Args... args
+  ) {
+    using ArgTuple = std::tuple<Args...>;
+    constexpr int RetCount = std::tuple_size<Result>();
+
+    torch::jit::Stack stack = boxArgs(args...);
+    (*boxed_kernel_func)(functor, opHandle, &stack);
+    TORCH_INTERNAL_ASSERT_DEBUG_ONLY(
+      stack.size() == RetCount,
+      "Boxed kernel was expected to return ", RetCount, " values on the stack, ",
+      "but instead returned ", stack.size(), " values."
+    );
+
+    auto legacy_result = guts::tuple_take<ArgTuple, RetCount>(ArgTuple{args...});
+    return legacy_result;
   }
 };
 
