@@ -1984,6 +1984,17 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           docker_image: "pytorch/manylinux-cuda102"
       - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_cpu_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m cpu devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-cuda102"
+      - binary_linux_build:
           name: binary_linux_manywheel_3_6m_cu92_devtoolset7_nightly_build
           build_environment: "manywheel 3.6m cu92 devtoolset7"
           filters:
@@ -2008,6 +2019,17 @@ workflows:
       - binary_linux_build:
           name: binary_linux_manywheel_3_8m_cu92_devtoolset7_nightly_build
           build_environment: "manywheel 3.8m cu92 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-cuda92"
+      - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_cu92_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m cu92 devtoolset7"
           filters:
             branches:
               only:
@@ -2050,6 +2072,17 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           docker_image: "pytorch/manylinux-cuda101"
       - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_cu101_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m cu101 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-cuda101"
+      - binary_linux_build:
           name: binary_linux_manywheel_3_6m_cu102_devtoolset7_nightly_build
           build_environment: "manywheel 3.6m cu102 devtoolset7"
           filters:
@@ -2074,6 +2107,17 @@ workflows:
       - binary_linux_build:
           name: binary_linux_manywheel_3_8m_cu102_devtoolset7_nightly_build
           build_environment: "manywheel 3.8m cu102 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-cuda102"
+      - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_cu102_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m cu102 devtoolset7"
           filters:
             branches:
               only:
@@ -2116,6 +2160,17 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           docker_image: "pytorch/manylinux-cuda110"
       - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_cu110_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m cu110 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-cuda110"
+      - binary_linux_build:
           name: binary_linux_manywheel_3_6m_rocm3_7_devtoolset7_nightly_build
           build_environment: "manywheel 3.6m rocm3.7 devtoolset7"
           filters:
@@ -2140,6 +2195,17 @@ workflows:
       - binary_linux_build:
           name: binary_linux_manywheel_3_8m_rocm3_7_devtoolset7_nightly_build
           build_environment: "manywheel 3.8m rocm3.7 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-rocm:3.7"
+      - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_rocm3_7_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m rocm3.7 devtoolset7"
           filters:
             branches:
               only:
@@ -2182,6 +2248,17 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           docker_image: "pytorch/manylinux-rocm:3.8"
       - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_rocm3_8_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m rocm3.8 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-rocm:3.8"
+      - binary_linux_build:
           name: binary_linux_manywheel_3_6m_rocm3_9_devtoolset7_nightly_build
           build_environment: "manywheel 3.6m rocm3.9 devtoolset7"
           filters:
@@ -2206,6 +2283,17 @@ workflows:
       - binary_linux_build:
           name: binary_linux_manywheel_3_8m_rocm3_9_devtoolset7_nightly_build
           build_environment: "manywheel 3.8m rocm3.9 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/manylinux-rocm:3.9"
+      - binary_linux_build:
+          name: binary_linux_manywheel_3_9m_rocm3_9_devtoolset7_nightly_build
+          build_environment: "manywheel 3.9m rocm3.9 devtoolset7"
           filters:
             branches:
               only:
@@ -2248,6 +2336,17 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           docker_image: "pytorch/conda-cuda"
       - binary_linux_build:
+          name: binary_linux_conda_3_9_cpu_devtoolset7_nightly_build
+          build_environment: "conda 3.9 cpu devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/conda-cuda"
+      - binary_linux_build:
           name: binary_linux_conda_3_6_cu92_devtoolset7_nightly_build
           build_environment: "conda 3.6 cu92 devtoolset7"
           filters:
@@ -2272,6 +2371,17 @@ workflows:
       - binary_linux_build:
           name: binary_linux_conda_3_8_cu92_devtoolset7_nightly_build
           build_environment: "conda 3.8 cu92 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/conda-cuda"
+      - binary_linux_build:
+          name: binary_linux_conda_3_9_cu92_devtoolset7_nightly_build
+          build_environment: "conda 3.9 cu92 devtoolset7"
           filters:
             branches:
               only:
@@ -2314,6 +2424,17 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           docker_image: "pytorch/conda-cuda"
       - binary_linux_build:
+          name: binary_linux_conda_3_9_cu101_devtoolset7_nightly_build
+          build_environment: "conda 3.9 cu101 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/conda-cuda"
+      - binary_linux_build:
           name: binary_linux_conda_3_6_cu102_devtoolset7_nightly_build
           build_environment: "conda 3.6 cu102 devtoolset7"
           filters:
@@ -2347,6 +2468,17 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           docker_image: "pytorch/conda-cuda"
       - binary_linux_build:
+          name: binary_linux_conda_3_9_cu102_devtoolset7_nightly_build
+          build_environment: "conda 3.9 cu102 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/conda-cuda"
+      - binary_linux_build:
           name: binary_linux_conda_3_6_cu110_devtoolset7_nightly_build
           build_environment: "conda 3.6 cu110 devtoolset7"
           filters:
@@ -2371,6 +2503,17 @@ workflows:
       - binary_linux_build:
           name: binary_linux_conda_3_8_cu110_devtoolset7_nightly_build
           build_environment: "conda 3.8 cu110 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          docker_image: "pytorch/conda-cuda"
+      - binary_linux_build:
+          name: binary_linux_conda_3_9_cu110_devtoolset7_nightly_build
+          build_environment: "conda 3.9 cu110 devtoolset7"
           filters:
             branches:
               only:
@@ -3289,6 +3432,19 @@ workflows:
             - binary_linux_manywheel_3_8m_cpu_devtoolset7_nightly_build
           docker_image: "pytorch/manylinux-cuda102"
       - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_cpu_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m cpu devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_cpu_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-cuda102"
+      - binary_linux_test:
           name: binary_linux_manywheel_3_6m_cu92_devtoolset7_nightly_test
           build_environment: "manywheel 3.6m cu92 devtoolset7"
           filters:
@@ -3330,6 +3486,21 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           requires:
             - binary_linux_manywheel_3_8m_cu92_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-cuda92"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_cu92_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m cu92 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_cu92_devtoolset7_nightly_build
           docker_image: "pytorch/manylinux-cuda92"
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
@@ -3379,6 +3550,21 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_cu101_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m cu101 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_cu101_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-cuda101"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
           name: binary_linux_manywheel_3_6m_cu102_devtoolset7_nightly_test
           build_environment: "manywheel 3.6m cu102 devtoolset7"
           filters:
@@ -3420,6 +3606,21 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           requires:
             - binary_linux_manywheel_3_8m_cu102_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-cuda102"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_cu102_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m cu102 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_cu102_devtoolset7_nightly_build
           docker_image: "pytorch/manylinux-cuda102"
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
@@ -3469,6 +3670,21 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_cu110_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m cu110 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_cu110_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-cuda110"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
           name: binary_linux_manywheel_3_6m_rocm3_7_devtoolset7_nightly_test
           build_environment: "manywheel 3.6m rocm3.7 devtoolset7"
           filters:
@@ -3510,6 +3726,21 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           requires:
             - binary_linux_manywheel_3_8m_rocm3_7_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-rocm:3.7"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_rocm3_7_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m rocm3.7 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_rocm3_7_devtoolset7_nightly_build
           docker_image: "pytorch/manylinux-rocm:3.7"
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
@@ -3559,6 +3790,21 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_rocm3_8_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m rocm3.8 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_rocm3_8_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-rocm:3.8"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
           name: binary_linux_manywheel_3_6m_rocm3_9_devtoolset7_nightly_test
           build_environment: "manywheel 3.6m rocm3.9 devtoolset7"
           filters:
@@ -3604,6 +3850,21 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - binary_linux_test:
+          name: binary_linux_manywheel_3_9m_rocm3_9_devtoolset7_nightly_test
+          build_environment: "manywheel 3.9m rocm3.9 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_manywheel_3_9m_rocm3_9_devtoolset7_nightly_build
+          docker_image: "pytorch/manylinux-rocm:3.9"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
           name: binary_linux_conda_3_6_cpu_devtoolset7_nightly_test
           build_environment: "conda 3.6 cpu devtoolset7"
           filters:
@@ -3641,6 +3902,19 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           requires:
             - binary_linux_conda_3_8_cpu_devtoolset7_nightly_build
+          docker_image: "pytorch/conda-cuda"
+      - binary_linux_test:
+          name: binary_linux_conda_3_9_cpu_devtoolset7_nightly_test
+          build_environment: "conda 3.9 cpu devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_conda_3_9_cpu_devtoolset7_nightly_build
           docker_image: "pytorch/conda-cuda"
       - binary_linux_test:
           name: binary_linux_conda_3_6_cu92_devtoolset7_nightly_test
@@ -3684,6 +3958,21 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           requires:
             - binary_linux_conda_3_8_cu92_devtoolset7_nightly_build
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
+          name: binary_linux_conda_3_9_cu92_devtoolset7_nightly_test
+          build_environment: "conda 3.9 cu92 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_conda_3_9_cu92_devtoolset7_nightly_build
           docker_image: "pytorch/conda-cuda"
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
@@ -3733,6 +4022,21 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - binary_linux_test:
+          name: binary_linux_conda_3_9_cu101_devtoolset7_nightly_test
+          build_environment: "conda 3.9 cu101 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_conda_3_9_cu101_devtoolset7_nightly_build
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
           name: binary_linux_conda_3_6_cu102_devtoolset7_nightly_test
           build_environment: "conda 3.6 cu102 devtoolset7"
           filters:
@@ -3778,6 +4082,21 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - binary_linux_test:
+          name: binary_linux_conda_3_9_cu102_devtoolset7_nightly_test
+          build_environment: "conda 3.9 cu102 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_conda_3_9_cu102_devtoolset7_nightly_build
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
           name: binary_linux_conda_3_6_cu110_devtoolset7_nightly_test
           build_environment: "conda 3.6 cu110 devtoolset7"
           filters:
@@ -3819,6 +4138,21 @@ workflows:
                 - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
           requires:
             - binary_linux_conda_3_8_cu110_devtoolset7_nightly_build
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - binary_linux_test:
+          name: binary_linux_conda_3_9_cu110_devtoolset7_nightly_test
+          build_environment: "conda 3.9 cu110 devtoolset7"
+          filters:
+            branches:
+              only:
+                - /.*/
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          requires:
+            - binary_linux_conda_3_9_cu110_devtoolset7_nightly_build
           docker_image: "pytorch/conda-cuda"
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
@@ -4897,6 +5231,20 @@ workflows:
           package_type: manywheel
           upload_subfolder: cpu
       - binary_upload:
+          name: binary_linux_manywheel_3_9m_cpu_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_cpu_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: cpu
+      - binary_upload:
           name: binary_linux_manywheel_3_6m_cu92_devtoolset7_nightly_upload
           context: org-member
           requires:
@@ -4929,6 +5277,20 @@ workflows:
           context: org-member
           requires:
             - binary_linux_manywheel_3_8m_cu92_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: cu92
+      - binary_upload:
+          name: binary_linux_manywheel_3_9m_cu92_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_cu92_devtoolset7_nightly_test
           filters:
             branches:
               only:
@@ -4981,6 +5343,20 @@ workflows:
           package_type: manywheel
           upload_subfolder: cu101
       - binary_upload:
+          name: binary_linux_manywheel_3_9m_cu101_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_cu101_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: cu101
+      - binary_upload:
           name: binary_linux_manywheel_3_6m_cu102_devtoolset7_nightly_upload
           context: org-member
           requires:
@@ -5013,6 +5389,20 @@ workflows:
           context: org-member
           requires:
             - binary_linux_manywheel_3_8m_cu102_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: cu102
+      - binary_upload:
+          name: binary_linux_manywheel_3_9m_cu102_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_cu102_devtoolset7_nightly_test
           filters:
             branches:
               only:
@@ -5065,6 +5455,20 @@ workflows:
           package_type: manywheel
           upload_subfolder: cu110
       - binary_upload:
+          name: binary_linux_manywheel_3_9m_cu110_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_cu110_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: cu110
+      - binary_upload:
           name: binary_linux_manywheel_3_6m_rocm3_7_devtoolset7_nightly_upload
           context: org-member
           requires:
@@ -5097,6 +5501,20 @@ workflows:
           context: org-member
           requires:
             - binary_linux_manywheel_3_8m_rocm3_7_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: rocm3.7
+      - binary_upload:
+          name: binary_linux_manywheel_3_9m_rocm3_7_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_rocm3_7_devtoolset7_nightly_test
           filters:
             branches:
               only:
@@ -5149,6 +5567,20 @@ workflows:
           package_type: manywheel
           upload_subfolder: rocm3.8
       - binary_upload:
+          name: binary_linux_manywheel_3_9m_rocm3_8_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_rocm3_8_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: rocm3.8
+      - binary_upload:
           name: binary_linux_manywheel_3_6m_rocm3_9_devtoolset7_nightly_upload
           context: org-member
           requires:
@@ -5181,6 +5613,20 @@ workflows:
           context: org-member
           requires:
             - binary_linux_manywheel_3_8m_rocm3_9_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: manywheel
+          upload_subfolder: rocm3.9
+      - binary_upload:
+          name: binary_linux_manywheel_3_9m_rocm3_9_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_manywheel_3_9m_rocm3_9_devtoolset7_nightly_test
           filters:
             branches:
               only:
@@ -5233,6 +5679,20 @@ workflows:
           package_type: conda
           upload_subfolder: cpu
       - binary_upload:
+          name: binary_linux_conda_3_9_cpu_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_conda_3_9_cpu_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: conda
+          upload_subfolder: cpu
+      - binary_upload:
           name: binary_linux_conda_3_6_cu92_devtoolset7_nightly_upload
           context: org-member
           requires:
@@ -5265,6 +5725,20 @@ workflows:
           context: org-member
           requires:
             - binary_linux_conda_3_8_cu92_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: conda
+          upload_subfolder: cu92
+      - binary_upload:
+          name: binary_linux_conda_3_9_cu92_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_conda_3_9_cu92_devtoolset7_nightly_test
           filters:
             branches:
               only:
@@ -5317,6 +5791,20 @@ workflows:
           package_type: conda
           upload_subfolder: cu101
       - binary_upload:
+          name: binary_linux_conda_3_9_cu101_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_conda_3_9_cu101_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: conda
+          upload_subfolder: cu101
+      - binary_upload:
           name: binary_linux_conda_3_6_cu102_devtoolset7_nightly_upload
           context: org-member
           requires:
@@ -5359,6 +5847,20 @@ workflows:
           package_type: conda
           upload_subfolder: cu102
       - binary_upload:
+          name: binary_linux_conda_3_9_cu102_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_conda_3_9_cu102_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: conda
+          upload_subfolder: cu102
+      - binary_upload:
           name: binary_linux_conda_3_6_cu110_devtoolset7_nightly_upload
           context: org-member
           requires:
@@ -5391,6 +5893,20 @@ workflows:
           context: org-member
           requires:
             - binary_linux_conda_3_8_cu110_devtoolset7_nightly_test
+          filters:
+            branches:
+              only:
+                - nightly
+            tags:
+              only:
+                - /v[0-9]+(\.[0-9]+)*-rc[0-9]+/
+          package_type: conda
+          upload_subfolder: cu110
+      - binary_upload:
+          name: binary_linux_conda_3_9_cu110_devtoolset7_nightly_upload
+          context: org-member
+          requires:
+            - binary_linux_conda_3_9_cu110_devtoolset7_nightly_test
           filters:
             branches:
               only:
@@ -7572,6 +8088,16 @@ workflows:
                 - postnightly
           docker_image: "pytorch/manylinux-cuda102"
       - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_cpu_devtoolset7_nightly
+          build_environment: "manywheel 3.9m cpu devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-cuda102"
+      - smoke_linux_test:
           name: smoke_linux_manywheel_3_6m_cu92_devtoolset7_nightly
           build_environment: "manywheel 3.6m cu92 devtoolset7"
           requires:
@@ -7598,6 +8124,18 @@ workflows:
       - smoke_linux_test:
           name: smoke_linux_manywheel_3_8m_cu92_devtoolset7_nightly
           build_environment: "manywheel 3.8m cu92 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-cuda92"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_cu92_devtoolset7_nightly
+          build_environment: "manywheel 3.9m cu92 devtoolset7"
           requires:
             - update_s3_htmls
           filters:
@@ -7644,6 +8182,18 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_cu101_devtoolset7_nightly
+          build_environment: "manywheel 3.9m cu101 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-cuda101"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
           name: smoke_linux_manywheel_3_6m_cu102_devtoolset7_nightly
           build_environment: "manywheel 3.6m cu102 devtoolset7"
           requires:
@@ -7670,6 +8220,18 @@ workflows:
       - smoke_linux_test:
           name: smoke_linux_manywheel_3_8m_cu102_devtoolset7_nightly
           build_environment: "manywheel 3.8m cu102 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-cuda102"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_cu102_devtoolset7_nightly
+          build_environment: "manywheel 3.9m cu102 devtoolset7"
           requires:
             - update_s3_htmls
           filters:
@@ -7716,6 +8278,18 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_cu110_devtoolset7_nightly
+          build_environment: "manywheel 3.9m cu110 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-cuda110"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
           name: smoke_linux_manywheel_3_6m_rocm3_7_devtoolset7_nightly
           build_environment: "manywheel 3.6m rocm3.7 devtoolset7"
           requires:
@@ -7742,6 +8316,18 @@ workflows:
       - smoke_linux_test:
           name: smoke_linux_manywheel_3_8m_rocm3_7_devtoolset7_nightly
           build_environment: "manywheel 3.8m rocm3.7 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-rocm:3.7"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_rocm3_7_devtoolset7_nightly
+          build_environment: "manywheel 3.9m rocm3.7 devtoolset7"
           requires:
             - update_s3_htmls
           filters:
@@ -7788,6 +8374,18 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_rocm3_8_devtoolset7_nightly
+          build_environment: "manywheel 3.9m rocm3.8 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-rocm:3.8"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
           name: smoke_linux_manywheel_3_6m_rocm3_9_devtoolset7_nightly
           build_environment: "manywheel 3.6m rocm3.9 devtoolset7"
           requires:
@@ -7814,6 +8412,18 @@ workflows:
       - smoke_linux_test:
           name: smoke_linux_manywheel_3_8m_rocm3_9_devtoolset7_nightly
           build_environment: "manywheel 3.8m rocm3.9 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/manylinux-rocm:3.9"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
+          name: smoke_linux_manywheel_3_9m_rocm3_9_devtoolset7_nightly
+          build_environment: "manywheel 3.9m rocm3.9 devtoolset7"
           requires:
             - update_s3_htmls
           filters:
@@ -7854,6 +8464,16 @@ workflows:
                 - postnightly
           docker_image: "pytorch/conda-cuda"
       - smoke_linux_test:
+          name: smoke_linux_conda_3_9_cpu_devtoolset7_nightly
+          build_environment: "conda 3.9 cpu devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/conda-cuda"
+      - smoke_linux_test:
           name: smoke_linux_conda_3_6_cu92_devtoolset7_nightly
           build_environment: "conda 3.6 cu92 devtoolset7"
           requires:
@@ -7880,6 +8500,18 @@ workflows:
       - smoke_linux_test:
           name: smoke_linux_conda_3_8_cu92_devtoolset7_nightly
           build_environment: "conda 3.8 cu92 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
+          name: smoke_linux_conda_3_9_cu92_devtoolset7_nightly
+          build_environment: "conda 3.9 cu92 devtoolset7"
           requires:
             - update_s3_htmls
           filters:
@@ -7926,6 +8558,18 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - smoke_linux_test:
+          name: smoke_linux_conda_3_9_cu101_devtoolset7_nightly
+          build_environment: "conda 3.9 cu101 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
           name: smoke_linux_conda_3_6_cu102_devtoolset7_nightly
           build_environment: "conda 3.6 cu102 devtoolset7"
           requires:
@@ -7962,6 +8606,18 @@ workflows:
           use_cuda_docker_runtime: "1"
           resource_class: gpu.medium
       - smoke_linux_test:
+          name: smoke_linux_conda_3_9_cu102_devtoolset7_nightly
+          build_environment: "conda 3.9 cu102 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
           name: smoke_linux_conda_3_6_cu110_devtoolset7_nightly
           build_environment: "conda 3.6 cu110 devtoolset7"
           requires:
@@ -7988,6 +8644,18 @@ workflows:
       - smoke_linux_test:
           name: smoke_linux_conda_3_8_cu110_devtoolset7_nightly
           build_environment: "conda 3.8 cu110 devtoolset7"
+          requires:
+            - update_s3_htmls
+          filters:
+            branches:
+              only:
+                - postnightly
+          docker_image: "pytorch/conda-cuda"
+          use_cuda_docker_runtime: "1"
+          resource_class: gpu.medium
+      - smoke_linux_test:
+          name: smoke_linux_conda_3_9_cu110_devtoolset7_nightly
+          build_environment: "conda 3.9 cu110 devtoolset7"
           requires:
             - update_s3_htmls
           filters:
