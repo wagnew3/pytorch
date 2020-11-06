@@ -446,26 +446,10 @@ ProfilingGraphExecutorImpl::ProfilingGraphExecutorImpl(
     std::string function_name)
     : GraphExecutorImplBase(graph, std::move(function_name)) {}
 
-ExecutionPlan ProfilingGraphExecutorImpl::getPlanFor(
+const ExecutionPlan& ProfilingGraphExecutorImpl::getOptimizedPlanFor(
     Stack& stack,
     size_t remaining_bailout_depth) {
-  std::lock_guard<std::mutex> lock(compile_mutex);
   GRAPH_DEBUG("Running ProfilingGraphExecutorImpl ", this);
-
-  // no opt mode
-  if (!getGraphExecutorOptimize()) {
-    if (!fallback_plan_) {
-      auto copy = graph->copy();
-      GRAPH_DEBUG(
-          "Before LowerGradOf (beginning of runNooptPassPipeline)\n", *graph);
-      LowerGradOf(*copy);
-      GRAPH_DEBUG("After LowerGradOf, before RemoveExpands\n", *graph);
-      RemoveExpands(copy);
-      fallback_plan_ = ExecutionPlan(copy, function_name_);
-      GRAPH_DUMP("NoOpt Graph: ", copy);
-    }
-    return *fallback_plan_;
-  }
 
   // if tensorExprFuserEnabled() returns true we need to persist the very first
   // time ProfilingGraphExecutorImpl is called, so we can update it correctly
@@ -474,11 +458,6 @@ ExecutionPlan ProfilingGraphExecutorImpl::getPlanFor(
   // object in interpreter.
   if (!remaining_bailout_depth_.has_value() || !tensorExprFuserEnabled()) {
     remaining_bailout_depth_ = remaining_bailout_depth;
-  }
-
-  if (optimized_plan_) {
-    GRAPH_DEBUG("plan already optimized:", (*optimized_plan_).graph);
-    return *optimized_plan_;
   }
 
   // simple executor
@@ -515,6 +494,35 @@ ExecutionPlan ProfilingGraphExecutorImpl::getPlanFor(
   optimized_plan_ =
       ExecutionPlan(copy, function_name_, *remaining_bailout_depth_);
   return *optimized_plan_;
+}
+
+const ExecutionPlan& ProfilingGraphExecutorImpl::getPlanFor(
+    Stack& stack,
+    size_t remaining_bailout_depth) {
+  std::lock_guard<std::mutex> lock(compile_mutex);
+
+  // no opt mode
+  if (!getGraphExecutorOptimize()) {
+    if (!fallback_plan_) {
+      auto copy = graph->copy();
+      GRAPH_DEBUG(
+          "Before LowerGradOf (beginning of runNooptPassPipeline)\n", *graph);
+      LowerGradOf(*copy);
+      GRAPH_DEBUG("After LowerGradOf, before RemoveExpands\n", *graph);
+      RemoveExpands(copy);
+      fallback_plan_ = ExecutionPlan(copy, function_name_);
+      GRAPH_DUMP("NoOpt Graph: ", copy);
+    }
+    return *fallback_plan_;
+  }
+
+  // IMPORTANT: This is a hot path of calling a torchscript function. Try not to
+  // add any code above this.
+  if (optimized_plan_) {
+    return *optimized_plan_;
+  }
+
+  return getOptimizedPlanFor(stack, remaining_bailout_depth);
 }
 
 GraphExecutorState ProfilingGraphExecutorImpl::getDebugState() {
